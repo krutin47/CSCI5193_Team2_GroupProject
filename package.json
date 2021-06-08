@@ -1,0 +1,24 @@
+{
+  "name": "csci5193_team2_groupproject",
+  "version": "1.0.0",
+  "description": "Group project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krutin47/CSCI5193_Team2_GroupProject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/krutin47/CSCI5193_Team2_GroupProject/issues"
+  },
+  "homepage": "https://github.com/krutin47/CSCI5193_Team2_GroupProject#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  }
+}
