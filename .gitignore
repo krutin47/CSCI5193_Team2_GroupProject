@@ -4,3 +4,4 @@ static/assets
 static/email/test-emails
 client/node_modules
 .github
+.idea
