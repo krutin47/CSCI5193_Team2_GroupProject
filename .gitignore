@@ -1,9 +1,13 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-#idea
-./.idea
 # dependencies
+dist
+/dist
+node_modules
 /node_modules
+uploads/*.jpg
+uploads/*.png
+
 /.pnp
 .pnp.js
 
@@ -15,6 +19,7 @@
 
 # misc
 .DS_Store
+.env
 .env.local
 .env.development.local
 .env.test.local
@@ -23,11 +28,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.idea/.gitignore
-.idea/LAHIS.iml
-.idea/aws.xml
-.idea/inspectionProfiles/
-.idea/misc.xml
-.idea/modules.xml
-.idea/sonarlint/
-.idea/vcs.xml
+frontend/node_modules/**
+frontend/build/**
+package-lock.json
+yarn-lock.json
+frontend/package-lock.json
+frontend/yarn-lock.json
