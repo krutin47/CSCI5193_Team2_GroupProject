@@ -9,6 +9,10 @@ const loader = async ({ expressApp }) => {
   const mongoConnection = await mongooseLoader();
   console.log('MongoDB Initialized');
 
+  //TODO: If time remains, Apply DI
+  
+  //TODO: If time remains, Add cron jobs
+
   await expressLoader({ app: expressApp });
   console.log('Express Initialized');
 }

@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 
+// refence: https://github.com/santiq/bulletproof-nodejs/blob/master/src/loaders/express.ts, Used this code a start point and made my own code.
+
 const expressApp = async ({ app }) => {
   /**
    * Health Check endpoints
@@ -28,8 +30,15 @@ const expressApp = async ({ app }) => {
     extended: true
   }));
   
-  // Load API routes
+  //TODO: If time remains, Try to make a file with routes and load it.
   // app.use(config.api.prefix, routes());
+  
+  // Load API routes
+  // User route
+  const userRouter = require('../api/routes/user.api.js');
+  app.use('/user', userRouter);
+  
+  //TODO: ADD Product route
 
   /// catch 404 and forward to error handler
   app.use((req, res, next) => {
