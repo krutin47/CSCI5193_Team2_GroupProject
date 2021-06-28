@@ -14,7 +14,7 @@ async function startServer() {
       console.log(err);
       return;
     }
-    console.log(`Your server is ready !`);
+    console.log(`Your server is ready on port:${process.env.PORT} !`);
   });
 }
 

@@ -10,8 +10,8 @@
   //Fetch all users
   router.get('/', 
     async (req, res) => {
-      const allUsers = await UserService.fetchAllUsers();
-      return res.json({ allUsers });
+      const allUsers = await UserService.fetchAllUser();
+      return res.json( allUsers );
   });
 
   //Fetch specific users
@@ -22,7 +22,7 @@
       if (typeof req.params.id == 'undefined' && req.params.id.length < 0) { throw err; }
        
       const specificUser = await UserService.fetchUser(req.params.id);
-      return res.json({ specificUser });
+      return res.json( specificUser );
   });
   
   //Delete specific users
@@ -33,7 +33,7 @@
       if (typeof req.params.id == 'undefined' && req.params.id.length < 0) { throw err; }
        
       const deleteSpecificUser = await UserService.deleteUser(req.params.id);
-      return res.json({ deleteSpecificUser });
+      return res.json( deleteSpecificUser );
   });
   
   //Login a users
@@ -44,8 +44,8 @@
       if (typeof req.body.email == 'undefined' && req.body.email.length < 0) { throw err; }
       if (typeof req.body.password == 'undefined' && req.body.password.length < 0) { throw err; }
 
-      const allUsers = await UserService.fetchAllUsers();
-      return res.json({ allUsers });
+      const allUsers = await UserService.fetchAllUsers(req.body.email, req.body.password);
+      return res.json( allUsers );
   });
 
   //Sign-up a users
@@ -68,7 +68,7 @@
       const phone = Number(0000000000);
       const gender = '';
 
-      const newUser = new User({ 
+      const newUser = { 
         firstName,
         lastName,
         email,
@@ -77,10 +77,15 @@
         address,
         phone,
         gender,
-      });
+      };
 
-      const newUsers = await UserService.createUser(newUser);
-      return res.json({ newUsers });
+      console.log("<<<<<<< new user in route >>>>>>>>")
+      console.log(newUser)
+
+      let newUsers = await UserService.createUser(newUser);
+      console.log("🚀 ~ file: user.api.js ~ line 86 ~ newUsers", newUsers)
+      
+      return res.json( newUsers );
   });
 
   //Fetch all users
@@ -88,7 +93,7 @@
     async (req, res) => {
 
       //Validation
-      if (typeof req.body.id == 'undefined' && req.body.id.length < 0) { throw err; }
+      // if (typeof req.body.id == 'undefined' && req.body.id.length < 0) { throw err; }
       if (typeof req.body.firstName == 'undefined' && req.body.firstName.length < 0) { throw err; }
       if (typeof req.body.lastName == 'undefined' && req.body.lastName.length < 0) { throw err; }
       if (typeof req.body.address == 'undefined' && req.body.address.length < 0) { throw err; }
@@ -111,7 +116,7 @@
       };
 
       const updatedUser = await UserService.updateUser(req.body.id, updateUser)
-      return res.json({ updatedUser })
+      return res.json( updatedUser )
   });
 
   module.exports = router;
