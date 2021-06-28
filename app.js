@@ -33,7 +33,7 @@ app.use(express.json());
 //const userRouter = require('./api/profileManagement');
 //app.use('/user', userRouter);
 
-// sendMail.forgotPassword(process.env.EMAIL,'123');
+sendMail.orderShipped('', '', process.env.EMAIL);
 
 
 app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
