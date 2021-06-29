@@ -5,17 +5,14 @@ var getProducts = async() => {
     try {
         var products = await ProductDb.getProducts();
         if (products.length == 0) {
-            var response = new Response("Products not found", false);
+            var response = new Response(404, false, "Products not found");
             response["products"] = [];
-            response["code"] = 404;
         } else {
-            var response = new Response("Products retrieved", true);
+            var response = new Response(200, true, "Products retrieved");
             response["products"] = products;
-            response["code"] = 200;
         }
     } catch (error) {
-        var response = new Response("Internal server error", false);
-        response["code"] = 500;
+        var response = new Response(500, false, "Internal server error");
     }
     return response;
 }
@@ -24,16 +21,13 @@ var getProductById = async(id) => {
     try {
         var product = await ProductDb.getProductById(id);
         if (product != undefined) {
-            var response = new Response("Product retrieved", true);
+            var response = new Response(200, true, "Product retrieved");
             response["product"] = product;
-            response["code"] = 200;
         } else {
-            var response = new Response("Product not found", false);
-            response["code"] = 404;
+            var response = new Response(404, false, "Product not found");
         }
     } catch (error) {
-        var response = new Response("Internal server error", false);
-        response["code"] = 500;
+        var response = new Response(500, false, "Internal server error");
     }
     return response;
 }
@@ -41,24 +35,19 @@ var getProductById = async(id) => {
 var addProduct = async(body) => {
     try {
         if (Object.keys(body).length == 0) {
-            var response = new Response("Bad request. Please send request body.", false);
-            response["code"] = 400;
+            var response = new Response(400, false, "Bad request. Please send request body.");
         } else if (!validateAddBody(body)) {
-            var response = new Response("Bad request. Please send valid request body.", false);
-            response["code"] = 400;
+            var response = new Response(400, false, "Bad request. Please send valid request body.");
         } else {
             var product = await ProductDb.addProduct(body);
             if (product != undefined) {
-                var response = new Response("Product added", true);
-                response["code"] = 200;
+                var response = new Response(200, true, "Product added");
             } else {
-                var response = new Response("Internal server error", false);
-                response["code"] = 500;
+                var response = new Response(500, false, "Internal server error");
             }
         }
     } catch (error) {
-        var response = new Response("Internal server error", false);
-        response["code"] = 500;
+        var response = new Response(500, false, "Internal server error");
     }
     return response;
 }
@@ -66,30 +55,24 @@ var addProduct = async(body) => {
 var updateProduct = async(id, body) => {
     try {
         if (Object.keys(body).length == 0) {
-            var response = new Response("Bad request. Please send request body.", false);
-            response["code"] = 400;
+            var response = new Response(400, false, "Bad request. Please send request body.");
         } else if (!validateUpdateBody(body)) {
-            var response = new Response("Bad request. Please send valid request body.", false);
-            response["code"] = 400;
+            var response = new Response(400, false, "Bad request. Please send valid request body.");
         } else {
             var product = await ProductDb.getProductById(id);
             if (product != undefined) {
                 var isUpdated = await ProductDb.updateProduct(id, body);
                 if (isUpdated) {
-                    var response = new Response("Product updated", true);
-                    response["code"] = 200;
+                    var response = new Response(200, true, "Product updated");
                 } else {
-                    var response = new Response("Internal server error", false);
-                    response["code"] = 500;
+                    var response = new Response(500, false, "Internal server error");
                 }
             } else {
-                var response = new Response("Product to update not found", false);
-                response["code"] = 404;
+                var response = new Response(404, false, "Product to update not found");
             }
         }
     } catch (error) {
-        var response = new Response("Internal server error", false);
-        response["code"] = 500;
+        var response = new Response(500, false, "Internal server error");
     }
     return response;
 }
@@ -100,19 +83,15 @@ var deleteProductById = async(id) => {
         if (product != undefined) {
             var isDeleted = await ProductDb.deleteProductById(id);
             if (isDeleted) {
-                var response = new Response("Product deleted", true);
-                response["code"] = 200;
+                var response = new Response(200, true, "Product deleted");
             } else {
-                var response = new Response("Product not found", false);
-                response["code"] = 404;
+                var response = new Response(404, false, "Product not found");
             }
         } else {
-            var response = new Response("Product to delete not found", false);
-            response["code"] = 404;
+            var response = new Response(404, false, "Product to delete not found");
         }
     } catch (error) {
-        var response = new Response("Internal server error", false);
-        response["code"] = 500;
+        var response = new Response(500, false, "Internal server error");
     }
     return response;
 }

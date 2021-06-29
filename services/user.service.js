@@ -1,6 +1,7 @@
 const User = require("../Models/user.model.js");
 const Response = require("../Models/response.model.js");
 const jwtService = require("./jwt.service.js");
+const UserDOA = require("../db/user.db.js");
 
 const UserServices = {
     fetchAllUser: async () => {
@@ -94,7 +95,7 @@ const UserServices = {
             phone: newUserData.phone,
             gender: newUserData.gender,
         });
-        console.log("🚀 ~ file: user.service.js ~ line 94 ~ newUser", newUser)
+        console.log("🚀 ~ file: user.service.js ~ line 98 ~ newUser", newUser)
 
         try {
             let foundUser = await User.findOne({ email: newUser.email })
@@ -120,6 +121,7 @@ const UserServices = {
                 }
             }
         } catch (error) {
+            console.log("🚀 ~ file: user.service.js ~ line 124 ~ createUser: ~ error", error)
             return new Response(500, false, "Internal server error");
         }
     },

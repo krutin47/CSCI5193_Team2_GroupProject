@@ -26,7 +26,7 @@ const passport = require("passport");
   });
   
   //Delete specific users
-  router.delete('/', passport.authenticate('local'), 
+  router.delete('/delete', passport.authenticate('local'), 
     async (req, res) => {
 
       //Validation
@@ -63,10 +63,10 @@ const passport = require("passport");
       const lastName = req.body.lastName;
       const email = req.body.email;
       const password = req.body.password;
-      const role = 1;
-      const address = '';
-      const phone = Number(0000000000);
-      const gender = '';
+      const role = req.body.role || 1;
+      const address = req.body.address || '';
+      const phone = req.body.phone || Number(0000000000);
+      const gender = req.body.gender || '';
 
       const newUser = { 
         firstName,
