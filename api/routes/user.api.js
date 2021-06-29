@@ -3,9 +3,9 @@
  * @author Krutin Trivedi <krutin@dal.ca>
  */
 
-  const router = require('express').Router();
-
-  const UserService = require("../../services/user.service.js");
+const router = require('express').Router();
+const UserService = require("../../services/user.service.js");
+// const passport = require("passport");
 
   //Fetch all users
   router.get('/', 
@@ -26,13 +26,13 @@
   });
   
   //Delete specific users
-  router.delete('/:id', 
+  router.delete('/', passport.authenticate('local'), 
     async (req, res) => {
 
       //Validation
-      if (typeof req.params.id == 'undefined' && req.params.id.length < 0) { throw err; }
+      if (typeof req.user._id == 'undefined' && req.user._id.length < 0) { throw err; }
        
-      const deleteSpecificUser = await UserService.deleteUser(req.params.id);
+      const deleteSpecificUser = await UserService.deleteUser(req.user._id);
       return res.json( deleteSpecificUser );
   });
   
@@ -89,7 +89,7 @@
   });
 
   //Fetch all users
-  router.post('/update', 
+  router.post('/update', passport.authenticate('jwt'), 
     async (req, res) => {
 
       //Validation

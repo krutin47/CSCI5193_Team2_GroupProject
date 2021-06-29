@@ -1,39 +1,21 @@
-/**
- * @file Root file for the backend of the Application
- * @author Team 2
-*/
+//Work in progress: Starting server with a new stracture approch of Lodaers. 
 
-//importing the Components and required Modules
-const express = require('express')
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const sendMail = require('./utils/util.email.js');
+const loaders = require('./loaders/index.js');
+const express = require('express');
 
-// const mongoose = require('mongoose');
+async function startServer() {
 
-var app = express();
-const port = process.env.PORT || 5000;
+  const app = express();
 
-require('dotenv').config();
+  await loaders({ expressApp: app });
 
-app.use(cors());
-app.use(express.json());
+  app.listen(process.env.PORT, err => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    console.log(`Your server is ready on port:${process.env.PORT} !`);
+  });
+}
 
-// establishing mongo atlas connections
-// mongoose.connect('',
-//                   { useNewUrlParser: true, useCreateIndex: true}
-//                 );
-// const connection = mongoose.connection;
-
-// connection.once('open', () => {
-//   console.log("MongoDB database connection established successfully");
-// })
-
-// Routes to all the APIs
-//const userRouter = require('./api/profileManagement');
-//app.use('/user', userRouter);
-
-sendMail.orderShipped('', '', process.env.EMAIL);
-
-
-app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
+startServer();
