@@ -37,6 +37,10 @@ const expressApp = async ({ app }) => {
   // User route
   const userRouter = require('../api/routes/user.api.js');
   app.use('/user', userRouter);
+
+  const productRouter = require('../api/routes/product.api.js');
+  app.use('/product', productRouter);
+
   
   //TODO: ADD Product route
 

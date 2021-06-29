@@ -5,7 +5,7 @@
 
 const router = require('express').Router();
 const UserService = require("../../services/user.service.js");
-// const passport = require("passport");
+const passport = require("passport");
 
   //Fetch all users
   router.get('/', 

@@ -1,6 +1,5 @@
-var express = require('express');
-var router = express.Router();
-var productService = require('../service/product.service');
+var router = require('express').Router();
+var productService = require('../../services/product.service.js');
 
 /* GET products listing. */
 router.get('/list', async(req, res, next) => {
