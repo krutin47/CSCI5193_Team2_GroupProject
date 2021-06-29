@@ -1,50 +1,34 @@
-const bcrypt = require("./bcrypt.service.js");
-const jwt = require("jsonwebtoken");
-//const keys = require("../config/keys");
-
 const User = require("../Models/user.model.js");
+const Response = require("../Models/response.model.js");
+const jwtService = require("./jwt.service.js");
 
 const UserServices = {
     fetchAllUser: async () => {
         try {
             let user = await User.find()
-    
+            
             if (user) {
-                return { 
-                    sucess: true, 
-                    users: user 
-                };
+                return new Response(200, true, user);
             } else {
-                return { 
-                    sucess: false, 
-                    err: err 
-                };
+                return new Response(200, true, 'No users to fetch');
             }
         } catch (error) {
-            throw error;
+            return new Response(500, false, "Internal server error");
         }
     },
 
     fetchUser: async (userID) => {   
         try {
-
             let user = await User.findById(userID);
 
             if (user) {
-                return { 
-                    sucess: true, 
-                    user: user 
-                };
+                return new Response(200, true, user);
             } else {
-                console.log("🚀 ~ file: user.service.js ~ line 41 ~ fetchUser: ~ else", error)
-                return { 
-                    sucess: false, 
-                    err: err 
-                };
+                return new Response(200, true, "No user with that user ID")
             }
         } catch (error) {
             console.log("🚀 ~ file: user.service.js ~ line 57 ~ fetchUser: ~ error", error)
-            throw error;
+            return new Response(500, false, "Internal server error");
         }
     },
 
@@ -55,16 +39,14 @@ const UserServices = {
 
             // Check if user exists
             if (!user) {
-                return { 
-                    sucess: false, 
-                    err: "Error: Email not found"
-                };
+                return new Response( 400 ,false, "Error: Email not found");
             }
 
             try {
                 let isValid = await bcrypt.validate(password, user.password);
 
                 if (isValid) {
+                    
                     // User matched
                     // Create JWT Payload
                     const payload = {
@@ -73,33 +55,19 @@ const UserServices = {
                         role: user.role,
                     };
 
-                    // Sign token
-                    jwt.sign(
-                        payload,
-                        keys.secretOrKey,
-                        {
-                            expiresIn: "7 days",
-                        },
-                        (err, token) => {
-                            if (err) {
-                                return { sucess: false, err: err };
-                            }
-                            return {
-                                success: true,
-                                token: "Bearer " + token,
-                            };
-                        }
-                    );
+                    jwtService.createJWT__Token(payload);
+
+                    
                 } else {
-                    return { success: false, err: "Password incorrect" };
+                    return new Response(400, false, "Password incorrect");
                 }
                 
             } catch (error) {
-                throw error;
+                return new Response(500, false, "Internal server error");
             }
         } catch (error) {
             console.log("🚀 ~ file: user.service.js ~ line 103 ~ login: ~ error", error)
-            throw error;
+            return new Response(500, false, "Internal server error");
         }
     },
 
@@ -107,13 +75,13 @@ const UserServices = {
         
         //Validation
         if (typeof newUserData == "undefined" && newUserData !== null) {
-            throw new Error('user data is empty or bad, will not be able create new user!!');
+            return new Response(400, false, 'user data is empty or bad, will not be able create new user!!');
         }
         if (
             Object.keys(newUserData).length === 0 &&
             newUserData.constructor === Object
         ) {
-            throw new Error('user data is empty or bad, will not be able create new user!!');
+            return new Response(400, false, 'user data is empty or bad, will not be able create new user!!');
         }
 
         const newUser = new User({
@@ -133,10 +101,7 @@ const UserServices = {
 
             if(foundUser){
                 console.log("🚀 ~ file: user.service.js ~ line 99 ~ .then ~ user", foundUser)
-                return {
-                    sucess: false,
-                    err: "Oops! Email id is already taken.",
-                };
+                return new Response(400, false, "Oops! Email id is already taken.");
             } else {
                 try{
                     
@@ -145,24 +110,17 @@ const UserServices = {
                     let newCreatedUser = await newUser.save()
                     
                     if(newCreatedUser){
-                        console.log("🚀 ~ file: user.service.js ~ line 123 ~ .then ~ return");
-                        return {
-                            sucess: true,
-                            msg: newCreatedUser,
-                        };
+                        return new Response(200, true, newCreatedUser);
                     } else {
-                        return {
-                            sucess: false,
-                            err: "System was not able to create a new record.",
-                        };
+                        console.log('System was not able to create a new record.');
+                        return new Response(400, false, "Bad Request!");
                     }
-
                 } catch(error) {
-                    throw error;
+                    return new Response(500, false, "Internal server error");
                 }
             }
         } catch (error) {
-            throw error;
+            return new Response(500, false, "Internal server error");
         }
     },
 
@@ -171,25 +129,18 @@ const UserServices = {
             let user = await User.findByIdAndRemove(userID).exec();
     
             if (user) {
-                return { 
-                    sucess: true,
-                    msg: "User deleted. =>",
-                    user: user 
-                };
+                return new Response(200, true, user);
             } else {
-                return { 
-                    sucess: false, 
-                    err: "No user found with this specified _ID, Aborting update." 
-                };
+                console.log("No user found with this specified _ID, Aborting update."); 
+                return new Response(400, false, "Bad Request!");
             }
         } catch (error) {
-            throw error;
+            return new Response(500, false, "Internal server error");
         }
     },
 
     updateUser: async (userID, userUpdates) => {
-        
-        userID = '60d991c930a002320c1099ab';
+
         //Validation
         if (typeof userUpdates == "undefined" && userUpdates !== null) {
             throw new Error('user data is empty or bad, will not be able update the user!!');
@@ -218,29 +169,21 @@ const UserServices = {
                     let newUser = await user.save();
 
                     if (newUser){
-                        return {
-                            sucess: true,
-                            msg: "User details Updated! => ",
-                            user: user,
-                        };
+                        return new Response(200, true, user);
                     } else {
-                        return { 
-                            sucess: false, 
-                            err: "Will never reach else but added as a debug point, Aborting update."
-                        };
+                        console.log("Will never reach else but added as a debug point, Aborting update.") 
+                        return new Response(400, false, 'Bad request!');
                     }
                 } catch (error) {
-                    throw error;
+                    return new Response(500, false, "Internal server error");
                 }
             
             } else {
-                return { 
-                    sucess: false, 
-                    err: "No user found with this specified _ID, Aborting update." 
-                };
+                console.log("No user found with this specified _ID, Aborting update.");
+                return new Response(400, false, 'Bad request!');
             }
         } catch (error) {
-            throw error;
+            return new Response(500, false, "Internal server error");
         }
     },
 };
