@@ -1,15 +1,16 @@
-# Swatchkart 
-This project is a prototype of the first version of our Application/buisness Swacthkart which is presented  by us in a video which can be found  at the link - https://youtu.be/w_iHW-veGDQ
+# Svachcart 
+This project is a prototype of the first version of our Application/buisness Svachcart which is presented  by us in a video which can be found  at the link - https://youtu.be/w_iHW-veGDQ
 
+Backend is live at [Svachcart](https://csci5193-team2-group-project.herokuapp.com/)
  
 ## Authors
 
 - Krutin Trivedi - *B00843516*
 - Aditya Jain  - *B00871927*
 - Pavan Abburi  - *B00883304* 
-- Raunak Bhargava *B00866496* 
-- Srikrishnan Sengottai Kasi *B00881083* 
-- Vishal Dipak Parmar  *B00883321* 
+- Raunak Bhargava - *B00866496* 
+- Srikrishnan Sengottai Kasi - *B00881083* 
+- Vishal Dipak Parmar - *B00883321* 
 
 
 ## What are the framework & libraries used ?
@@ -20,7 +21,7 @@ This application is built using the following frameworks and libraries :package:
 
 ## What cloud service did we used to store data ? 
 * [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-* [Heroku] (https://www.heroku.com/)
+* [Heroku](https://www.heroku.com/)
 
 ## What are the prerequisite required ?
 * Node JS - [Install](https://nodejs.org/en/download/)
@@ -33,13 +34,14 @@ This application is built using the following frameworks and libraries :package:
 
 ### Back End
 1. Run the server by using `node app.js` in separte terminal. 
-2. Now the server will be up in following URL [localhost:5000](http://localhost:5000/).
+2. Now the server will be up in following URL [localhost:3000](http://localhost:3000/).
 
 **Note** The above steps will succeed only if the prerequisite platforms are installed in your local machine.
 
 ## Application tour :
-	You can navigate to the site and choose products to add to the cart and then login to further check them out.You earn reward points every time you buy products and you can claim vouchers of popular brands using these.
-	This is basically a first version of a Ecommerce site made specially for sanitory products promoting local brands near your area.
+You can navigate to the site and choose products to add to the cart and then login to further check them out.You earn reward points every time you buy products and you can claim vouchers of popular brands using these.
+
+This is basically a first version of a Ecommerce site made specially for sanitory products promoting local brands near your area.
 
 
 ## Other references
